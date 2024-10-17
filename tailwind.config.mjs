@@ -1,8 +1,14 @@
 /** @type {import('tailwindcss').Config} */
+import defaultTheme from 'tailwindcss/defaultTheme'
+
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Doppio One', ...defaultTheme.fontFamily.sans],
+        serif: ['Spooky Monster', ...defaultTheme.fontFamily.serif],
+      },
       colors: {
         primary: '#167DB7',
         'blue-zodiac': {
@@ -34,6 +40,11 @@ export default {
       },
       backgroundImage: {
         'hero-halloween': 'url(/hero-halloween.webp)',
+        'custom-gradient': 'linear-gradient(180deg, hsl(0deg 0% 0.78%) 0%, hsla(217, 80%, 18%, 1) 100%)',
+      },
+      filter: {
+        'custom-filter':
+          'progid:DXImageTransform.Microsoft.gradient(startColorstr="#03050F", endColorstr="#092552", GradientType=1)',
       },
     },
   },
