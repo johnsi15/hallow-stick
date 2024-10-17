@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "hallowstick",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -12,8 +12,10 @@
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/tailwind": "^5.1.2",
+    "@fontsource/doppio-one": "^5.1.0",
     "astro": "^4.16.5",
     "tailwindcss": "^3.4.14",
+    "tailwindcss-animated": "^1.1.2",
     "typescript": "^5.6.3"
   }
 }
