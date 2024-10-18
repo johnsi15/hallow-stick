@@ -5,7 +5,9 @@ import Layout from '../layouts/Layout.astro'
 <Layout title='HallowStick 🎃👻'>
   <main>
     <section class='bg-hero-halloween bg-cover bg-center px-4 w-full h-screen'>
-      <div class='relative max-w-xl w-full h-full m-auto flex flex-col justify-center items-center'>
+      <div
+        class='relative max-w-xl w-full h-full m-auto flex flex-col justify-center items-center animate-fade-up animate-once'
+      >
         <h1 class='text-bunker-950 font-serif md:text-8xl text-4xl pb-2'>HallowStick</h1>
         <p class='text-center text-blue-zodiac-950 text-3xl mb-72 text-pretty rounded-lg'>
           Convierte tus imágenes o fotos en stickers únicos de Halloween
@@ -13,6 +15,40 @@ import Layout from '../layouts/Layout.astro'
       </div>
     </section>
 
-    <section class='h-[600px] bg-custom-gradient'>Opciones</section>
+    <section class='md:h-[600px] bg-custom-gradient'>
+      <div class='-translate-y-16'>
+        <h2 class='text-center text-3xl text-blue-zodiac-200 mb-14'>¡Selecciona tu estilo de sticker favorito!</h2>
+        <ul class='grid grid-cols-2 gap-2 md:flex md:gap-7 justify-center max-w-3xl w-full m-auto mb-12'>
+          <li
+            class='bg-bunker-800 px-4 py-2 rounded-md md:hover:scale-105 hover:bg-bunker-600 transition-all cursor-pointer'
+          >
+            <img src='/calabaza.webp' alt='Calabaza' width='250' class='w-[150px] md:w-[250px] object-cover' />
+            <span class='text-2xl text-center text-blue-zodiac-200 block'>Calabaza</span>
+          </li>
+          <li
+            class='bg-bunker-800 px-4 py-2 rounded-md md:hover:scale-105 hover:bg-bunker-600 transition-all cursor-pointer'
+          >
+            <img src='/bruja.webp' alt='Bruja' width='250' class='w-[150px] md:w-[250px] object-cover' />
+            <span class='text-2xl text-center text-blue-zodiac-200 block'>Bruja</span>
+          </li>
+          <li
+            class='bg-bunker-800 px-4 py-2 rounded-md md:hover:scale-105 hover:bg-bunker-600 transition-all cursor-pointer'
+          >
+            <img src='/fantasma.webp' alt='Fantasma' width='250' class='w-[150px] md:w-[250px] object-cover' />
+            <span class='text-2xl text-center text-blue-zodiac-200 block'>Fantasma</span>
+          </li>
+          <li
+            class='bg-bunker-800 px-4 py-2 rounded-md md:hover:scale-105 hover:bg-bunker-600 transition-all cursor-pointer'
+          >
+            <img src='/zoombie.webp' alt='Zombie' width='250' class='w-[150px] md:w-[250px] object-cover' />
+            <span class='text-2xl text-center text-blue-zodiac-200 block'>Zombie</span>
+          </li>
+        </ul>
+        <button
+          class='text-2xl block m-auto px-4 py-2 bg-bunker-200 text-bunker-900 rounded hover:scale-105 transition-all shadow-md'
+          >Crea tu sticker</button
+        >
+      </div>
+    </section>
   </main>
 </Layout>
