@@ -5,7 +5,7 @@ import Layout from '../layouts/Layout.astro'
 
 <Layout title='HallowStick 🎃👻'>
   <main>
-    <section class='bg-hero-halloween bg-cover bg-center px-4 w-full h-screen'>
+    <section class='bg-hero-halloween bg-cover bg-center px-4 w-full h-screen filter brightness-90'>
       <div
         class='relative max-w-xl w-full h-full m-auto flex flex-col justify-center items-center animate-fade-up animate-once'
       >
@@ -22,24 +22,28 @@ import Layout from '../layouts/Layout.astro'
         <ul class='options grid grid-cols-2 gap-2 md:flex md:gap-7 justify-center max-w-3xl w-full m-auto mb-12'>
           <li
             class='bg-bunker-800 px-4 py-2 rounded-md md:hover:scale-105 hover:bg-bunker-600 transition-all cursor-pointer'
+            data-topic='pumpkin'
           >
             <img src='/calabaza.webp' alt='Calabaza' width='250' class='w-[150px] md:w-[250px] object-cover' />
             <span class='text-2xl text-center text-blue-zodiac-200 block'>Calabaza</span>
           </li>
           <li
             class='bg-bunker-800 px-4 py-2 rounded-md md:hover:scale-105 hover:bg-bunker-600 transition-all cursor-pointer'
+            data-topic='witch'
           >
             <img src='/bruja.webp' alt='Bruja' width='250' class='w-[150px] md:w-[250px] object-cover' />
             <span class='text-2xl text-center text-blue-zodiac-200 block'>Bruja</span>
           </li>
           <li
             class='bg-bunker-800 px-4 py-2 rounded-md md:hover:scale-105 hover:bg-bunker-600 transition-all cursor-pointer'
+            data-topic='ghost'
           >
             <img src='/fantasma.webp' alt='Fantasma' width='250' class='w-[150px] md:w-[250px] object-cover' />
             <span class='text-2xl text-center text-blue-zodiac-200 block'>Fantasma</span>
           </li>
           <li
             class='bg-bunker-800 px-4 py-2 rounded-md md:hover:scale-105 hover:bg-bunker-600 transition-all cursor-pointer'
+            data-topic='zombies'
           >
             <img src='/zoombie.webp' alt='Zombie' width='250' class='w-[150px] md:w-[250px] object-cover' />
             <span class='text-2xl text-center text-blue-zodiac-200 block'>Zombie</span>
@@ -48,7 +52,7 @@ import Layout from '../layouts/Layout.astro'
 
         <CldUploadWidget
           id='upload-widget'
-          uploadPreset='upload-unsigned-images'
+          uploadPreset='upload-halloween'
           class='hidden'
           options={{
             sources: ['local'],
@@ -81,23 +85,33 @@ import Layout from '../layouts/Layout.astro'
 </Layout>
 
 <script>
+  import { navigate } from 'astro:transitions/client'
+
   const $options = document.querySelectorAll('.options li')
   const $widget = document.getElementById('upload-widget')
 
   if ($widget) {
-    $widget.addEventListener('click', () => {
-      console.log('click')
-    })
+    $widget.addEventListener('clduploadwidget:success', ((e: CustomEvent<{ info: { public_id: string } }>) => {
+      console.log(e)
+      const publicId = e.detail.info.public_id
+      const topic = document.querySelector('.selected')?.getAttribute('data-topic')
+      console.log({ publicId, topic })
+      navigate(`/sticker?id=${publicId}&topic=${topic}`)
+    }) as EventListener)
+
+    $widget.addEventListener('clduploadwidget:error', ((e: CustomEvent<{ detail: { UploadWidget: object } }>) => {
+      console.log(e)
+    }) as EventListener)
   }
 
   if ($options) {
     $options.forEach(el => {
-      console.log(el)
       el.addEventListener('click', event => {
         const target = event.currentTarget as HTMLElement
         cleanClass($options)
 
-        target.classList.add('selected', 'bg-bunker-600', 'scale-105')
+        target.classList.add('selected', '!bg-bunker-600', 'scale-105')
+        console.log(target)
         if ($widget?.classList.contains('hidden')) {
           $widget.classList.remove('hidden')
         }
