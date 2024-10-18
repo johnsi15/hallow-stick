@@ -1,0 +1,55 @@
+---
+import { getCldImageUrl } from 'astro-cloudinary/helpers'
+import Layout from '../layouts/Layout.astro'
+
+const { searchParams } = Astro.url
+const id = searchParams.get('id')
+const topic = searchParams.get('topic')
+
+if (id == null || topic == null) return Astro.redirect('/')
+
+const url = getCldImageUrl({ src: id })
+console.log({ id, url })
+---
+
+<Layout title='Sticker HallowStick 🎃👻'>
+  <main data-id={id} data-topic={topic}>
+    <h2 class='text-2xl text-white'>Sticker</h2>
+    <img id='preview' src={url} />
+  </main>
+</Layout>
+
+<script>
+  import { getCldImageUrl } from 'astro-cloudinary/helpers'
+
+  const $main = document.querySelector('main') as HTMLElement
+  const id = $main.getAttribute('data-id')
+  const topic = $main.getAttribute('data-topic')
+  const preview = document.getElementById('preview') as HTMLImageElement
+
+  const TOPICS: Record<string, string> = {
+    ghost: 'Add scary ghosts to the background',
+    zombies: 'Add zombies to the background',
+    pumpkin: 'Add some pumpkin to the background',
+    witch: 'Add some witch to the background',
+    custom: '',
+  } as const
+
+  console.log({ id, topic })
+
+  if (topic && id) {
+    const url = getCldImageUrl({
+      src: id,
+      replaceBackground: TOPICS[topic],
+    })
+
+    console.log(url)
+
+    preview.style.opacity = '.3'
+
+    preview.src = url
+    preview.onload = () => {
+      preview.style.opacity = '1'
+    }
+  }
+</script>
