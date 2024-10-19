@@ -3,8 +3,9 @@ import { getCldImageUrl } from 'astro-cloudinary/helpers'
 import Layout from '../layouts/Layout.astro'
 import Topics from '@components/Topics.astro'
 import Loader from '@components/Loader.astro'
-import Wp from 'src/icons/wp.astro'
 import Header from '@components/Header.astro'
+import Footer from '@components/Footer.astro'
+import Wp from 'src/icons/wp.astro'
 
 const { searchParams } = Astro.url
 const id = searchParams.get('id')
@@ -98,6 +99,7 @@ console.log({ color })
           </form>
         </div>
       </div>
+      <Footer />
     </section>
   </main>
 
