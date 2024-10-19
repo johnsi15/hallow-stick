@@ -27,12 +27,23 @@ console.log({ id, url })
   const topic = $main.getAttribute('data-topic')
   const preview = document.getElementById('preview') as HTMLImageElement
 
-  const TOPICS: Record<string, string> = {
-    ghost: 'Add scary ghosts to the background',
-    zombies: 'Add zombies to the background',
-    pumpkin: 'Add some pumpkin to the background',
-    witch: 'Add some witch to the background',
-    custom: '',
+  const TOPICS: Record<string, Record<string, string>> = {
+    ghost: {
+      prompt: 'Add playful cartoon ghosts in the background with a spooky yet whimsical vibe',
+      logo: 'halloween-images/dyu8sfnsywve6grjgz8p',
+    },
+    zombies: {
+      prompt: 'Add a horrifying zombies in the background with rotting flesh empty eyes and a twisted grin',
+      logo: 'halloween-images/ce6jjddam8ibdtjmzsil',
+    },
+    pumpkin: {
+      prompt: 'Add scary and terrifying pumpkins in the background for Halloween',
+      logo: 'halloween-images/ax6n8dwar5u1zjbdwj5i',
+    },
+    witch: {
+      prompt: 'Add witches in the background with a Halloween theme',
+      logo: 'halloween-images/ze8unl3gwt7fr1vvzcj8',
+    },
   } as const
 
   console.log({ id, topic })
@@ -40,7 +51,7 @@ console.log({ id, url })
   if (topic && id) {
     const url = getCldImageUrl({
       src: id,
-      replaceBackground: TOPICS[topic],
+      replaceBackground: TOPICS[topic].prompt,
       crop: {
         type: 'thumb',
         width: 512,
@@ -51,7 +62,7 @@ console.log({ id, url })
       },
       overlays: [
         {
-          publicId: 'halloween-images/dyu8sfnsywve6grjgz8p',
+          publicId: TOPICS[topic].logo,
           position: {
             gravity: 'north_west',
             angle: -20,
@@ -60,6 +71,10 @@ console.log({ id, url })
           height: 100,
         },
       ],
+      replace: {
+        to: 'Paint the person face with vibrant colors and intricate patterns resembling a Halloween mask or festival makeup',
+        from: 'face',
+      },
       border: '7px_solid_white',
       format: 'jpg',
     })
