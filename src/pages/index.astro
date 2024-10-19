@@ -122,7 +122,7 @@ import Layout from '../layouts/Layout.astro'
   function cleanClass(options: NodeListOf<Element>) {
     options.forEach(el => {
       if (el.classList.contains('selected')) {
-        el.classList.remove('selected', 'bg-bunker-600', 'scale-105')
+        el.classList.remove('selected', '!bg-bunker-600', 'scale-105')
       }
     })
   }
