@@ -1,6 +1,7 @@
 ---
 import { getCldImageUrl } from 'astro-cloudinary/helpers'
 import Layout from '../layouts/Layout.astro'
+import Topics from '@components/Topics.astro'
 
 const { searchParams } = Astro.url
 const id = searchParams.get('id')
@@ -9,83 +10,214 @@ const topic = searchParams.get('topic')
 if (id == null || topic == null) return Astro.redirect('/')
 
 const url = getCldImageUrl({ src: id })
-console.log({ id, url })
 ---
 
 <Layout title='Sticker HallowStick 🎃👻'>
   <main data-id={id} data-topic={topic}>
-    <h2 class='text-2xl text-white'>Sticker</h2>
-    <img id='preview' src={url} />
+    <section class='bg-hero-halloween bg-cover bg-center px-4 w-full h-screen filter brightness-90'>
+      <div
+        class='relative max-w-xl w-full h-full m-auto flex flex-col justify-center items-center animate-fade-up animate-once'
+      >
+        <h2 class='md:text-5xl font-serif text-bunker-950 text-center pb-7'>
+          Crea tu Sticker de Halloween Personalizado
+        </h2>
+        <div class='flex justify-center'>
+          <img id='preview' src={url} class='w-[512px] max-w-full object-cover aspect-square' width='512' />
+        </div>
+      </div>
+    </section>
+    <section class='bg-custom-gradient h-screen'>
+      <div class='max-w-3xl m-auto -translate-y-16'>
+        <Topics />
+
+        <div class='flex flex-col'>
+          <h3 class='text-3xl text-blue-zodiac-200 text-center mb-12'>Agregar texto personalizado</h3>
+          <form id='text-custom' class='max-w-2xl w-full m-auto'>
+            <div class='grid gap-6 mb-6 md:grid-cols-2'>
+              <div>
+                <label for='texto' class='block mb-2 text-sm font-medium text-blue-zodiac-100'>Texto</label>
+                <input
+                  type='text'
+                  id='texto'
+                  class='bg-blue-zodiac-900 border border-white text-blue-zodiac-100 text-sm rounded-lg block w-full p-2.5 placeholder:text-blue-zodiac-100 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200'
+                  placeholder='Tengo mucho miedo!'
+                  name='texto'
+                  required
+                />
+              </div>
+              <div>
+                <label for='color' class='block mb-2 text-sm font-medium text-blue-zodiac-100'>Color</label>
+                <select
+                  id='color'
+                  class='bg-blue-zodiac-900 border border-white text-blue-zodiac-100 text-sm rounded-lg block w-full p-2.5 placeholder:text-blue-zodiac-100 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200'
+                  name='color'
+                >
+                  <option value='#000000'>Negro</option>
+                  <option value='#ffffff'>Blanco</option>
+                  <option value='#FF8A00'>Naranja</option>
+                  <option value='#0020FF'>Azul</option>
+                </select>
+              </div>
+              <button
+                type='submit'
+                class='text-white block col-start-1 col-end-3 justify-self-center bg-blue-zodiac-900 hover:bg-blue-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all w-[250px]'
+                >Agregar texto</button
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
-</Layout>
 
-<script>
-  import { getCldImageUrl } from 'astro-cloudinary/helpers'
+  <script>
+    import { getCldImageUrl } from 'astro-cloudinary/helpers'
+    import { navigate } from 'astro:transitions/client'
 
-  const $main = document.querySelector('main') as HTMLElement
-  const id = $main.getAttribute('data-id')
-  const topic = $main.getAttribute('data-topic')
-  const preview = document.getElementById('preview') as HTMLImageElement
+    const $main = document.querySelector('main') as HTMLElement
+    const id = $main.getAttribute('data-id')
+    const topic = $main.getAttribute('data-topic')
+    const preview = document.getElementById('preview') as HTMLImageElement
+    const $formTextCustom = document.getElementById('text-custom') as HTMLFormElement
 
-  const TOPICS: Record<string, Record<string, string>> = {
-    ghost: {
-      prompt: 'Add playful cartoon ghosts in the background with a spooky yet whimsical vibe',
-      logo: 'halloween-images/dyu8sfnsywve6grjgz8p',
-    },
-    zombies: {
-      prompt: 'Add a horrifying zombies in the background with rotting flesh empty eyes and a twisted grin',
-      logo: 'halloween-images/ce6jjddam8ibdtjmzsil',
-    },
-    pumpkin: {
-      prompt: 'Add scary and terrifying pumpkins in the background for Halloween',
-      logo: 'halloween-images/ax6n8dwar5u1zjbdwj5i',
-    },
-    witch: {
-      prompt: 'Add witches in the background with a Halloween theme',
-      logo: 'halloween-images/ze8unl3gwt7fr1vvzcj8',
-    },
-  } as const
+    const $options = document.querySelectorAll('.options li')
+    if ($options) {
+      $options.forEach(el => {
+        el.addEventListener('click', event => {
+          const target = event.currentTarget as HTMLElement
+          cleanClass($options)
 
-  console.log({ id, topic })
+          target.classList.add('selected', '!bg-bunker-600', 'scale-105')
+          const topic = target.getAttribute('data-topic')
+          navigate(`/sticker?id=${id}&topic=${topic}`)
+        })
+      })
+    }
 
-  if (topic && id) {
-    const url = getCldImageUrl({
-      src: id,
-      replaceBackground: TOPICS[topic].prompt,
-      crop: {
-        type: 'thumb',
-        width: 512,
-        height: 512,
-        source: true,
-        zoom: '1.0',
-        gravity: 'center',
+    function cleanClass(options: NodeListOf<Element>) {
+      options.forEach(el => {
+        if (el.classList.contains('selected')) {
+          el.classList.remove('selected', '!bg-bunker-600', 'scale-105')
+        }
+      })
+    }
+
+    const TOPICS: Record<string, Record<string, string>> = {
+      ghost: {
+        prompt: 'Add playful cartoon ghosts in the background with a spooky yet whimsical vibe',
+        logo: 'halloween-images/dyu8sfnsywve6grjgz8p',
       },
-      overlays: [
-        {
-          publicId: TOPICS[topic].logo,
-          position: {
-            gravity: 'north_west',
-            angle: -20,
-          },
-          width: 100,
-          height: 100,
-        },
-      ],
-      replace: {
-        to: 'Paint the person face with vibrant colors and intricate patterns resembling a Halloween mask or festival makeup',
-        from: 'face',
+      zombies: {
+        prompt: 'Add a horrifying zombies in the background with rotting flesh empty eyes and a twisted grin',
+        logo: 'halloween-images/ce6jjddam8ibdtjmzsil',
       },
-      border: '7px_solid_white',
-      format: 'jpg',
+      pumpkin: {
+        prompt: 'Add scary and terrifying pumpkins in the background for Halloween',
+        logo: 'halloween-images/ax6n8dwar5u1zjbdwj5i',
+      },
+      witch: {
+        prompt: 'Add witches in the background with a Halloween theme',
+        logo: 'halloween-images/ze8unl3gwt7fr1vvzcj8',
+      },
+    } as const
+
+    $formTextCustom.addEventListener('submit', e => {
+      e.preventDefault()
+      const formData = new FormData($formTextCustom)
+      const text = formData.get('texto')
+      const color = formData.get('color')
+      console.log({ text, color })
+
+      if (topic && id && color && text) {
+        const url = generateImage({ topic, id, text: { textCustom: text.toString(), color: color?.toString() } })
+
+        console.log(url)
+
+        preview.style.opacity = '.3'
+
+        preview.src = url
+        preview.onload = () => {
+          preview.style.opacity = '1'
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+
+      $formTextCustom.reset()
     })
 
-    console.log(url)
-
-    preview.style.opacity = '.3'
-
-    preview.src = url
-    preview.onload = () => {
-      preview.style.opacity = '1'
+    interface GenerateImage {
+      topic: string
+      id: string
+      text?: {
+        textCustom: string
+        color: string
+      }
     }
-  }
-</script>
+
+    function generateImage({ topic, id, text }: GenerateImage) {
+      const url = getCldImageUrl({
+        src: id,
+        replaceBackground: TOPICS[topic].prompt,
+        crop: {
+          type: 'thumb',
+          width: 512,
+          height: 512,
+          source: true,
+          zoom: '1.0',
+          gravity: 'center',
+        },
+        overlays: [
+          {
+            publicId: TOPICS[topic].logo,
+            position: {
+              gravity: 'north_west',
+              angle: -20,
+            },
+            width: 100,
+            height: 100,
+          },
+          text
+            ? {
+                position: {
+                  x: 0,
+                  y: 30,
+                  gravity: 'south',
+                },
+                text: {
+                  color: text.color,
+                  fontFamily: 'Source Sans Pro',
+                  fontSize: 60,
+                  fontWeight: 'black',
+                  text: text.textCustom,
+                },
+              }
+            : {},
+        ],
+        replace: {
+          to: 'Paint the person face with vibrant colors and intricate patterns resembling a Halloween mask or festival makeup',
+          from: 'face',
+        },
+        border: '7px_solid_white',
+        format: 'jpg',
+        width: 512,
+        height: 512,
+      })
+
+      return url
+    }
+
+    if (topic && id) {
+      const url = generateImage({ topic, id })
+
+      console.log(url)
+
+      preview.style.opacity = '.3'
+
+      preview.src = url
+      preview.onload = () => {
+        preview.style.opacity = '1'
+      }
+    }
+  </script>
+</Layout>
