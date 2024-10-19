@@ -3,6 +3,7 @@ import { getCldImageUrl } from 'astro-cloudinary/helpers'
 import Layout from '../layouts/Layout.astro'
 import Topics from '@components/Topics.astro'
 import Loader from '@components/Loader.astro'
+import Wp from 'src/icons/wp.astro'
 
 const { searchParams } = Astro.url
 const id = searchParams.get('id')
@@ -31,6 +32,19 @@ console.log({ color })
             <Loader />
           </div>
           <p class='loader_text hidden text-blue-zodiac-100 text-center mt-4 text-lg'>Personalizando tu sticker...</p>
+
+          <div class='flex gap-5 mt-7 justify-center'>
+            <button
+              type='button'
+              class='download bg-bunker-600 text-white px-6 py-3 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all'
+              >Descargar sticker 🎃</button
+            >
+            <button
+              type='button'
+              class='sharewp bg-green-600 text-white px-6 py-3 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all flex gap-2 items-center'
+              >Compartir en <Wp />
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -91,6 +105,8 @@ console.log({ color })
     const $formTextCustom = document.getElementById('text-custom') as HTMLFormElement
     const $loader = document.querySelector('.loader')
     const $loaderText = document.querySelector('.loader_text')
+    const $downloadButton = document.querySelector('.download') as HTMLButtonElement
+    const $shareButton = document.querySelector('.sharewp') as HTMLButtonElement
 
     const $options = document.querySelectorAll('.options li')
     if ($options) {
@@ -221,6 +237,34 @@ console.log({ color })
         $loaderText?.classList.add('hidden')
         preview.style.opacity = '1'
       }
+
+      $downloadButton.addEventListener('click', async () => {
+        const response = await fetch(url)
+        const blob = await response.blob()
+
+        const blobUrl = URL.createObjectURL(blob)
+
+        const a = document.createElement('a')
+
+        a.href = blobUrl
+        a.download = 'sticker-hallowstick.jpg'
+
+        document.body.appendChild(a)
+        a.click()
+
+        document.body.removeChild(a)
+        URL.revokeObjectURL(blobUrl)
+      })
+
+      $shareButton.addEventListener('click', async () => {
+        const a = document.createElement('a')
+
+        a.href = encodeURI(`https://wa.me/?text=¡Mira este sticker de Halloween! ${url}`)
+        a.download = 'sticker-hallowstick.jpg'
+        a.target = '_blank'
+
+        a.click()
+      })
     }
   </script>
 </Layout>
