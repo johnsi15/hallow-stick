@@ -11,6 +11,8 @@ export default {
       },
       colors: {
         primary: '#167DB7',
+        light: '#D0E2E1',
+        hallow: '#FF7518',
         'blue-zodiac': {
           50: '#ecf9ff',
           100: '#d4f0ff',
