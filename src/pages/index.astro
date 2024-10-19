@@ -2,22 +2,26 @@
 import { CldUploadWidget, CldImage } from 'astro-cloudinary'
 import Layout from '../layouts/Layout.astro'
 import Topics from '@components/Topics.astro'
+import Header from '@components/Header.astro'
 ---
 
 <Layout title='HallowStick 🎃👻'>
   <main>
     <section class='bg-hero-halloween bg-cover bg-center px-4 w-full h-screen filter brightness-90'>
+      <Header />
       <div
         class='relative max-w-xl w-full h-full m-auto flex flex-col justify-center items-center animate-fade-up animate-once'
       >
-        <h1 class='text-bunker-950 font-serif md:text-8xl text-4xl pb-2'>HallowStick</h1>
-        <p class='text-center text-blue-zodiac-950 text-3xl mb-72 text-pretty rounded-lg'>
-          Convierte tus imágenes o fotos en stickers únicos de Halloween
-        </p>
+        <div class='absolute w-full inset-0 m-auto top-48'>
+          <h1 class='text-bunker-950 text-center font-serif md:text-8xl text-4xl pb-2'>HallowStick</h1>
+          <p class='text-center text-blue-zodiac-950 text-3xl mb-72 text-pretty rounded-lg'>
+            Convierte tus imágenes o fotos en stickers únicos de Halloween
+          </p>
+        </div>
       </div>
     </section>
 
-    <section class='md:h-[600px] bg-custom-gradient'>
+    <section id='create-sticker' class='md:h-[600px] bg-custom-gradient'>
       <div class='-translate-y-16'>
         <Topics />
 
@@ -51,6 +55,11 @@ import Topics from '@components/Topics.astro'
           >
         </CldUploadWidget>
       </div>
+
+      <div id='examples'>Ejemplos</div>
+      <footer>
+        Hecho con ❤️ por <a href='https://johnserrano.co/' target='_blank'>John Serrano</a>
+      </footer>
     </section>
   </main>
 </Layout>
