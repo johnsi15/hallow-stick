@@ -41,6 +41,27 @@ console.log({ id, url })
     const url = getCldImageUrl({
       src: id,
       replaceBackground: TOPICS[topic],
+      crop: {
+        type: 'thumb',
+        width: 512,
+        height: 512,
+        source: true,
+        zoom: '1.0',
+        gravity: 'center',
+      },
+      overlays: [
+        {
+          publicId: 'halloween-images/dyu8sfnsywve6grjgz8p',
+          position: {
+            gravity: 'north_west',
+            angle: -20,
+          },
+          width: 100,
+          height: 100,
+        },
+      ],
+      border: '7px_solid_white',
+      format: 'jpg',
     })
 
     console.log(url)
