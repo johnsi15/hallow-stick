@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro'
 import Topics from '@components/Topics.astro'
 import Loader from '@components/Loader.astro'
 import Wp from 'src/icons/wp.astro'
+import Header from '@components/Header.astro'
 
 const { searchParams } = Astro.url
 const id = searchParams.get('id')
@@ -20,36 +21,44 @@ console.log({ color })
 <Layout title='Sticker HallowStick 🎃👻'>
   <main data-id={id} data-topic={topic} data-text={text} data-color={color}>
     <section class='bg-hero-halloween bg-cover bg-center px-4 w-full h-screen filter brightness-90'>
+      <Header />
       <div
         class='relative max-w-xl w-full h-full m-auto flex flex-col justify-center items-center animate-fade-up animate-once'
       >
-        <h2 class='md:text-5xl font-serif text-bunker-950 text-center pb-7'>
-          Crea tu Sticker de Halloween Personalizado
-        </h2>
-        <div class='flex flex-col justify-center shadow-2xl relative'>
-          <img id='preview' src={url} class='w-[512px] max-w-full object-cover aspect-square' width='512' />
-          <div class='loader hidden absolute left-52 top-36 m-auto'>
-            <Loader />
-          </div>
-          <p class='loader_text hidden text-blue-zodiac-100 text-center mt-4 text-lg'>Personalizando tu sticker...</p>
+        <div class='absolute inset-0 w-full m-auto top-24'>
+          <h2 class='md:text-5xl font-serif text-bunker-950 text-center pb-7'>
+            Crea tu Sticker de Halloween Personalizado
+          </h2>
+          <div class='flex flex-col justify-center items-center relative'>
+            <img
+              id='preview'
+              src={url}
+              class='w-[512px] max-w-full object-cover aspect-square shadow-2xl bg-bunker-900'
+              width='512'
+            />
+            <div class='loader hidden absolute left-52 top-36 m-auto'>
+              <Loader />
+            </div>
+            <p class='loader_text hidden text-blue-zodiac-100 text-center mt-4 text-lg'>Personalizando tu sticker...</p>
 
-          <div class='flex gap-5 mt-7 justify-center'>
-            <button
-              type='button'
-              class='download bg-bunker-600 text-white px-6 py-3 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all'
-              >Descargar sticker 🎃</button
-            >
-            <button
-              type='button'
-              class='sharewp bg-green-600 text-white px-6 py-3 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all flex gap-2 items-center'
-              >Compartir en <Wp />
-            </button>
+            <div class='flex gap-5 mt-7 justify-center'>
+              <button
+                type='button'
+                class='download bg-bunker-600 text-white px-6 py-3 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all'
+                >Descargar sticker 🎃</button
+              >
+              <button
+                type='button'
+                class='sharewp bg-green-600 text-white px-6 py-3 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all flex gap-2 items-center'
+                >Compartir en <Wp />
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </section>
     <section class='bg-custom-gradient h-screen'>
-      <div class='max-w-3xl m-auto -translate-y-16'>
+      <div class='max-w-3xl m-auto -translate-y-12'>
         <Topics />
 
         <div class='flex flex-col mt-20'>
