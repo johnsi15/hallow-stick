@@ -2,18 +2,22 @@
 import { getCldImageUrl } from 'astro-cloudinary/helpers'
 import Layout from '../layouts/Layout.astro'
 import Topics from '@components/Topics.astro'
+import Loader from '@components/Loader.astro'
 
 const { searchParams } = Astro.url
 const id = searchParams.get('id')
 const topic = searchParams.get('topic')
+const text = searchParams.get('text')
+const color = searchParams.get('color')
 
 if (id == null || topic == null) return Astro.redirect('/')
 
 const url = getCldImageUrl({ src: id })
+console.log({ color })
 ---
 
 <Layout title='Sticker HallowStick 🎃👻'>
-  <main data-id={id} data-topic={topic}>
+  <main data-id={id} data-topic={topic} data-text={text} data-color={color}>
     <section class='bg-hero-halloween bg-cover bg-center px-4 w-full h-screen filter brightness-90'>
       <div
         class='relative max-w-xl w-full h-full m-auto flex flex-col justify-center items-center animate-fade-up animate-once'
@@ -21,8 +25,12 @@ const url = getCldImageUrl({ src: id })
         <h2 class='md:text-5xl font-serif text-bunker-950 text-center pb-7'>
           Crea tu Sticker de Halloween Personalizado
         </h2>
-        <div class='flex justify-center'>
+        <div class='flex flex-col justify-center shadow-2xl relative'>
           <img id='preview' src={url} class='w-[512px] max-w-full object-cover aspect-square' width='512' />
+          <div class='loader hidden absolute left-52 top-36 m-auto'>
+            <Loader />
+          </div>
+          <p class='loader_text hidden text-blue-zodiac-100 text-center mt-4 text-lg'>Personalizando tu sticker...</p>
         </div>
       </div>
     </section>
@@ -30,8 +38,8 @@ const url = getCldImageUrl({ src: id })
       <div class='max-w-3xl m-auto -translate-y-16'>
         <Topics />
 
-        <div class='flex flex-col'>
-          <h3 class='text-3xl text-blue-zodiac-200 text-center mb-12'>Agregar texto personalizado</h3>
+        <div class='flex flex-col mt-20'>
+          <h3 class='text-3xl text-blue-zodiac-200 text-center mb-10'>Agregar texto personalizado</h3>
           <form id='text-custom' class='max-w-2xl w-full m-auto'>
             <div class='grid gap-6 mb-6 md:grid-cols-2'>
               <div>
@@ -39,7 +47,7 @@ const url = getCldImageUrl({ src: id })
                 <input
                   type='text'
                   id='texto'
-                  class='bg-blue-zodiac-900 border border-white text-blue-zodiac-100 text-sm rounded-lg block w-full p-2.5 placeholder:text-blue-zodiac-100 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200'
+                  class='bg-blue-zodiac-900 border border-white text-blue-zodiac-100 text-sm rounded-lg block w-full p-2.5 placeholder:text-blue-zodiac-400 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200'
                   placeholder='Tengo mucho miedo!'
                   name='texto'
                   required
@@ -54,13 +62,13 @@ const url = getCldImageUrl({ src: id })
                 >
                   <option value='#000000'>Negro</option>
                   <option value='#ffffff'>Blanco</option>
-                  <option value='#FF8A00'>Naranja</option>
+                  <option value='#DE601A'>Naranja</option>
                   <option value='#0020FF'>Azul</option>
                 </select>
               </div>
               <button
                 type='submit'
-                class='text-white block col-start-1 col-end-3 justify-self-center bg-blue-zodiac-900 hover:bg-blue-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all w-[250px]'
+                class='text-white block col-start-1 col-end-3 justify-self-center bg-bunker-600 hover:scale-105 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all w-[220px]'
                 >Agregar texto</button
               >
             </div>
@@ -77,8 +85,12 @@ const url = getCldImageUrl({ src: id })
     const $main = document.querySelector('main') as HTMLElement
     const id = $main.getAttribute('data-id')
     const topic = $main.getAttribute('data-topic')
+    const text = $main.getAttribute('data-text')
+    const color = $main.getAttribute('data-color')
     const preview = document.getElementById('preview') as HTMLImageElement
     const $formTextCustom = document.getElementById('text-custom') as HTMLFormElement
+    const $loader = document.querySelector('.loader')
+    const $loaderText = document.querySelector('.loader_text')
 
     const $options = document.querySelectorAll('.options li')
     if ($options) {
@@ -124,38 +136,25 @@ const url = getCldImageUrl({ src: id })
     $formTextCustom.addEventListener('submit', e => {
       e.preventDefault()
       const formData = new FormData($formTextCustom)
-      const text = formData.get('texto')
-      const color = formData.get('color')
+      const text = formData.get('texto') ?? ''
+      const color = formData.get('color') ?? '#000000'
       console.log({ text, color })
 
-      if (topic && id && color && text) {
-        const url = generateImage({ topic, id, text: { textCustom: text.toString(), color: color?.toString() } })
-
-        console.log(url)
-
-        preview.style.opacity = '.3'
-
-        preview.src = url
-        preview.onload = () => {
-          preview.style.opacity = '1'
-        }
-
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }
-
-      $formTextCustom.reset()
+      navigate(
+        `/sticker?id=${id}&topic=${topic}&text=${encodeURIComponent(text.toString())}&color=${encodeURIComponent(color.toString())}`
+      )
     })
 
     interface GenerateImage {
       topic: string
       id: string
-      text?: {
-        textCustom: string
-        color: string
-      }
+      text?: string | null
+      color?: string | null
     }
 
-    function generateImage({ topic, id, text }: GenerateImage) {
+    function generateImage({ topic, id, text, color }: GenerateImage) {
+      console.log({ text, color })
+
       const url = getCldImageUrl({
         src: id,
         replaceBackground: TOPICS[topic].prompt,
@@ -177,7 +176,7 @@ const url = getCldImageUrl({ src: id })
             width: 100,
             height: 100,
           },
-          text
+          text && color
             ? {
                 position: {
                   x: 0,
@@ -185,11 +184,11 @@ const url = getCldImageUrl({ src: id })
                   gravity: 'south',
                 },
                 text: {
-                  color: text.color,
+                  color: color,
                   fontFamily: 'Source Sans Pro',
                   fontSize: 60,
                   fontWeight: 'black',
-                  text: text.textCustom,
+                  text: text,
                 },
               }
             : {},
@@ -208,14 +207,18 @@ const url = getCldImageUrl({ src: id })
     }
 
     if (topic && id) {
-      const url = generateImage({ topic, id })
+      const url = generateImage({ topic, id, text, color })
 
       console.log(url)
 
       preview.style.opacity = '.3'
+      $loader?.classList.remove('hidden')
+      $loaderText?.classList.remove('hidden')
 
       preview.src = url
       preview.onload = () => {
+        $loader?.classList.add('hidden')
+        $loaderText?.classList.add('hidden')
         preview.style.opacity = '1'
       }
     }
