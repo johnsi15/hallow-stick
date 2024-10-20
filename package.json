@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
+    "@astrojs/netlify": "5.5.4",
     "@astrojs/tailwind": "5.1.2",
     "@fontsource/doppio-one": "5.1.0",
     "astro": "4.16.5",
