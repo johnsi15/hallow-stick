@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro'
 import Topics from '@components/Topics.astro'
 import Header from '@components/Header.astro'
 import Footer from '@components/Footer.astro'
+import Examples from '@components/Examples.astro'
 ---
 
 <Layout title='HallowStick 🎃👻'>
@@ -22,7 +23,7 @@ import Footer from '@components/Footer.astro'
       </div>
     </section>
 
-    <section id='create-sticker' class='md:h-[600px] bg-custom-gradient'>
+    <section id='create-sticker' class='bg-custom-gradient pb-10'>
       <div class='-translate-y-16'>
         <Topics />
 
@@ -57,7 +58,7 @@ import Footer from '@components/Footer.astro'
         </CldUploadWidget>
       </div>
 
-      <div id='examples'>Ejemplos</div>
+      <Examples />
       <Footer />
     </section>
   </main>

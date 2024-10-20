@@ -6,6 +6,7 @@ import Loader from '@components/Loader.astro'
 import Header from '@components/Header.astro'
 import Footer from '@components/Footer.astro'
 import Wp from 'src/icons/wp.astro'
+import Examples from '@components/Examples.astro'
 
 const { searchParams } = Astro.url
 const id = searchParams.get('id')
@@ -58,7 +59,7 @@ console.log({ color })
         </div>
       </div>
     </section>
-    <section class='bg-custom-gradient h-screen'>
+    <section class='bg-custom-gradient pb-10'>
       <div class='max-w-3xl m-auto -translate-y-12'>
         <Topics />
 
@@ -98,6 +99,8 @@ console.log({ color })
             </div>
           </form>
         </div>
+
+        <Examples />
       </div>
       <Footer />
     </section>
@@ -221,7 +224,7 @@ console.log({ color })
             : {},
         ],
         replace: {
-          to: 'Paint the person face with vibrant colors and intricate patterns resembling a Halloween mask or festival makeup',
+          to: 'Apply vibrant colors and intricate patterns resembling a Halloween mask or festival makeup but maintain the original facial structure and identity',
           from: 'face',
         },
         border: '7px_solid_white',
