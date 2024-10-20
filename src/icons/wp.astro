@@ -1,4 +1,16 @@
-<svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='28' height='28' viewBox='0,0,256,256'>
+---
+const { size = 28, toClass } = Astro.props
+---
+
+<svg
+  xmlns='http://www.w3.org/2000/svg'
+  x='0px'
+  y='0px'
+  width={size}
+  height={size}
+  viewBox='0,0,256,256'
+  class={toClass}
+>
   <g
     fill='#ffffff'
     fill-rule='nonzero'

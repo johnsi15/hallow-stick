@@ -27,8 +27,8 @@ console.log({ color })
       <div
         class='relative max-w-xl w-full h-full m-auto flex flex-col justify-center items-center animate-fade-up animate-once'
       >
-        <div class='absolute inset-0 w-full m-auto top-24'>
-          <h2 class='md:text-5xl font-serif text-bunker-950 text-center pb-7'>
+        <div class='absolute inset-0 w-full m-auto md:top-24 top-6'>
+          <h2 class='md:text-5xl text-3xl font-serif text-bunker-950 text-center pb-7'>
             Crea tu Sticker de Halloween Personalizado
           </h2>
           <div class='flex flex-col justify-center items-center relative'>
@@ -46,13 +46,13 @@ console.log({ color })
             <div class='flex gap-5 mt-7 justify-center'>
               <button
                 type='button'
-                class='download bg-bunker-600 text-white px-6 py-3 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all'
+                class='download bg-bunker-600 text-white md:px-6 md:py-3 px-3 py-2 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all'
                 >Descargar sticker 🎃</button
               >
               <button
                 type='button'
-                class='sharewp bg-green-600 text-white px-6 py-3 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all flex gap-2 items-center'
-                >Compartir en <Wp />
+                class='sharewp bg-green-600 text-white md:px-6 md:py-3 px-3 py-2 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all flex gap-2 items-center'
+                >Compartir en <Wp toClass='w-5 h-5' />
               </button>
             </div>
           </div>
@@ -65,8 +65,8 @@ console.log({ color })
 
         <div class='flex flex-col mt-20'>
           <h3 class='text-3xl text-blue-zodiac-200 text-center mb-10'>Agregar texto personalizado</h3>
-          <form id='text-custom' class='max-w-2xl w-full m-auto'>
-            <div class='grid gap-6 mb-6 md:grid-cols-2'>
+          <form id='text-custom' class='md:max-w-2xl md:w-full md:m-auto mx-3'>
+            <div class='grid gap-6 mb-6 md:grid-cols-2 w-full'>
               <div>
                 <label for='texto' class='block mb-2 text-sm font-medium text-blue-zodiac-100'>Texto</label>
                 <input
@@ -93,7 +93,7 @@ console.log({ color })
               </div>
               <button
                 type='submit'
-                class='text-white block col-start-1 col-end-3 justify-self-center bg-bunker-600 hover:scale-105 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all w-[220px]'
+                class='text-white block md:col-start-1 md:col-end-3 justify-self-center bg-bunker-600 hover:scale-105 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-all w-[220px]'
                 >Agregar texto</button
               >
             </div>
