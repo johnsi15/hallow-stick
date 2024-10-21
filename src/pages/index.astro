@@ -74,8 +74,8 @@ const stickers = await getCollection('stickers')
                   <a href={`/sticker?id=${sticker.data.public_id}&topic=ghost`}>
                     <CldImage
                       src={sticker.data.public_id}
-                      width={300}
-                      height={300}
+                      width={512}
+                      height={512}
                       crop={{
                         type: 'thumb',
                         source: true,
@@ -84,8 +84,9 @@ const stickers = await getCollection('stickers')
                         gravity: 'center',
                       }}
                       alt={`stciker ${sticker.data.public_id}`}
-                      border='7px_solid_white'
+                      border='7px_solid_DarkOrange'
                       format='jpg'
+                      sizes='100vw'
                     />
                   </a>
                 </li>
