@@ -5,6 +5,7 @@ const stickers = defineCollection({
   loader: cldAssetsLoader({
     limit: 6,
     folder: 'halloween-images',
+    context: true,
   }),
 })
 
