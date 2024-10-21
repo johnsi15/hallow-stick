@@ -5,6 +5,10 @@ import Topics from '@components/Topics.astro'
 import Header from '@components/Header.astro'
 import Footer from '@components/Footer.astro'
 import Examples from '@components/Examples.astro'
+
+import { getCollection } from 'astro:content'
+const stickers = await getCollection('stickers')
+console.log({ stickers })
 ---
 
 <Layout title='HallowStick 🎃👻'>
@@ -59,6 +63,51 @@ import Examples from '@components/Examples.astro'
       </div>
 
       <Examples />
+      <div class='max-w-4xl md:mx-auto mx-2 md:mt-36 mt-12 mb-16'>
+        <ul class='grid md:grid-cols-3 grid-cols-2 gap-3'>
+          {
+            stickers.map(sticker => {
+              return (
+                <li>
+                  <a href={`/sticker?id=${sticker.data.public_id}&topic=ghost`}>
+                    <CldImage
+                      src={sticker.data.public_id}
+                      width={300}
+                      height={300}
+                      crop={{
+                        type: 'thumb',
+                        source: true,
+                        width: 300,
+                        height: 300,
+                        gravity: 'center',
+                      }}
+                      overlays={[
+                        {
+                          publicId: 'halloween-images/logos/dyu8sfnsywve6grjgz8p',
+                          position: {
+                            gravity: 'north_west',
+                            angle: -20,
+                          },
+                          width: 60,
+                          height: 60,
+                        },
+                      ]}
+                      alt={`stciker ${sticker.data.public_id}`}
+                      replaceBackground='Add a horrifying zombies in the background with rotting flesh empty eyes and a twisted grin'
+                      replace={{
+                        to: 'Apply vibrant colors and intricate patterns resembling a Halloween mask or festival makeup but maintain the original facial structure and identity',
+                        from: 'face',
+                      }}
+                      border='7px_solid_white'
+                      format='jpg'
+                    />
+                  </a>
+                </li>
+              )
+            })
+          }
+        </ul>
+      </div>
       <Footer />
     </section>
   </main>
