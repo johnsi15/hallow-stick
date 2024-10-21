@@ -4,7 +4,7 @@ import { cldAssetsLoader } from 'astro-cloudinary/loaders'
 const stickers = defineCollection({
   loader: cldAssetsLoader({
     limit: 6,
-    folder: 'halloween-images',
+    folder: 'halloween-images/examples',
     context: true,
   }),
 })
