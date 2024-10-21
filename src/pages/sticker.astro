@@ -9,10 +9,13 @@ import Wp from 'src/icons/wp.astro'
 import Examples from '@components/Examples.astro'
 
 const { searchParams } = Astro.url
-const id = searchParams.get('id')
-const topic = searchParams.get('topic')
-const text = searchParams.get('text')
-const color = searchParams.get('color')
+const queryString = decodeURIComponent(searchParams.toString())
+const params = new URLSearchParams(queryString)
+
+const id = params.get('id')
+const topic = params.get('topic')
+const text = params.get('text')
+const color = params.get('color')
 
 if (id == null || topic == null) return Astro.redirect('/')
 
@@ -174,7 +177,6 @@ const url = getCldImageUrl({ src: id })
       const formData = new FormData($formTextCustom)
       const text = formData.get('texto') ?? ''
       const color = formData.get('color') ?? '#000000'
-      console.log({ text, color })
 
       navigate(
         `/sticker?id=${id}&topic=${topic}&text=${encodeURIComponent(text.toString())}&color=${encodeURIComponent(color.toString())}`
@@ -189,8 +191,6 @@ const url = getCldImageUrl({ src: id })
     }
 
     function generateImage({ topic, id, text, color }: GenerateImage) {
-      console.log({ text, color })
-
       const url = getCldImageUrl({
         src: id,
         replaceBackground: TOPICS[topic].prompt,
@@ -245,8 +245,6 @@ const url = getCldImageUrl({ src: id })
     if (topic && id) {
       const url = generateImage({ topic, id, text, color })
 
-      console.log(url)
-
       preview.style.opacity = '.3'
       $loader?.classList.remove('hidden')
       $loaderText?.classList.remove('hidden')
@@ -283,7 +281,16 @@ const url = getCldImageUrl({ src: id })
       $shareButton.addEventListener('click', async () => {
         const a = document.createElement('a')
 
-        a.href = encodeURI(`https://wa.me/?text=¡Mira este sticker de Halloween! ${url}`)
+        const encodedText = text ? encodeURIComponent(text.toString()) : ''
+        const encodedColor = color ? encodeURIComponent(color.toString()) : ''
+
+        const textColor = text && color ? `%26text=${encodedText}%26color=${encodedColor}` : ''
+
+        const url = `https://hallowstick.netlify.app/sticker?id=${id}%26topic=${topic}${textColor}`
+
+        const message = `¡Mira este sticker de Halloween! ${url}`
+
+        a.href = encodeURI(`https://wa.me/?text=${message}`)
         a.download = 'sticker-hallowstick.jpg'
         a.target = '_blank'
 
