@@ -17,10 +17,12 @@ const color = searchParams.get('color')
 if (id == null || topic == null) return Astro.redirect('/')
 
 const url = getCldImageUrl({ src: id })
-console.log({ color })
 ---
 
-<Layout title='Sticker HallowStick 🎃👻'>
+<Layout
+  title='Sticker HallowStick 🎃👻'
+  description='Convierte tus imágenes en stickers personalizados para Halloween.'
+>
   <main data-id={id} data-topic={topic} data-text={text} data-color={color}>
     <section class='bg-hero-halloween bg-cover bg-center px-4 w-full h-screen filter brightness-90'>
       <Header />
@@ -38,10 +40,12 @@ console.log({ color })
               class='w-[512px] max-w-full object-cover aspect-square shadow-2xl bg-bunker-900'
               width='512'
             />
-            <div class='loader hidden absolute left-52 top-36 m-auto'>
+            <div class='loader hidden absolute md:left-52 left-32 top-36 m-auto'>
               <Loader />
             </div>
-            <p class='loader_text hidden text-blue-zodiac-100 text-center mt-4 text-lg'>Personalizando tu sticker...</p>
+            <p class='loader_text hidden absolute bottom-24 text-blue-zodiac-300 text-center mt-4 text-lg'>
+              Personalizando tu sticker...
+            </p>
 
             <div class='flex gap-5 mt-7 justify-center'>
               <button
