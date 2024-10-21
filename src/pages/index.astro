@@ -8,7 +8,6 @@ import Examples from '@components/Examples.astro'
 
 import { getCollection } from 'astro:content'
 const stickers = await getCollection('stickers')
-console.log({ stickers })
 ---
 
 <Layout title='HallowStick 🎃👻'>
@@ -18,7 +17,7 @@ console.log({ stickers })
       <div
         class='relative max-w-xl w-full h-full m-auto flex flex-col justify-center items-center animate-fade-up animate-once'
       >
-        <div class='absolute w-full inset-0 m-auto md:top-48 top-16'>
+        <div class='absolute w-full inset-0 m-auto md:top-36 top-16'>
           <h1 class='text-bunker-950 text-center font-serif md:text-8xl text-6xl pb-2'>HallowStick</h1>
           <p class='text-center text-blue-zodiac-950 md:text-3xl text-2xl mb-72 text-pretty rounded-lg'>
             Convierte tus imágenes o fotos en stickers únicos de Halloween
@@ -64,6 +63,9 @@ console.log({ stickers })
 
       <Examples />
       <div class='max-w-4xl md:mx-auto mx-2 md:mt-36 mt-12 mb-16'>
+        <h3 class='text-3xl text-center text-blue-zodiac-200 max-w-2xl w-full mx-auto mb-12'>
+          Haz clic y descubre lo fácil que es transformar una foto en un sticker personalizado
+        </h3>
         <ul class='grid md:grid-cols-3 grid-cols-2 md:gap-6 gap-4'>
           {
             stickers.map(sticker => {

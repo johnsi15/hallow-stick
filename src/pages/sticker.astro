@@ -40,22 +40,23 @@ const url = getCldImageUrl({ src: id })
               class='w-[512px] max-w-full object-cover aspect-square shadow-2xl bg-bunker-900'
               width='512'
             />
-            <div class='loader hidden absolute md:left-52 left-32 top-36 m-auto'>
+            <div class='loader hidden absolute md:left-56 left-32 top-36 m-auto'>
               <Loader />
             </div>
             <p class='loader_text hidden absolute bottom-24 text-blue-zodiac-300 text-center mt-4 text-lg'>
               Personalizando tu sticker...
             </p>
 
-            <div class='flex gap-5 mt-7 justify-center'>
+            <div class='download_share flex gap-5 mt-7 justify-center'>
               <button
                 type='button'
-                class='download bg-bunker-600 text-white md:px-6 md:py-3 px-3 py-2 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all'
-                >Descargar sticker 🎃</button
+                class='download bg-bunker-600 text-white md:px-6 md:py-3 px-3 py-2 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all disabled:bg-opacity-60 disabled:hover:translate-y-0 disabled:hover:opacity-100 disabled:cursor-not-allowed'
+                disabled>Descargar sticker 🎃</button
               >
               <button
                 type='button'
-                class='sharewp bg-green-600 text-white md:px-6 md:py-3 px-3 py-2 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all flex gap-2 items-center'
+                class='sharewp bg-green-600 text-white md:px-6 md:py-3 px-3 py-2 rounded-md w-max hover:opacity-90 hover:translate-y-1 transition-all flex gap-2 items-center disabled:bg-opacity-60 disabled:hover:translate-y-0 disabled:hover:opacity-100 disabled:cursor-not-allowed'
+                disabled
                 >Compartir en <Wp toClass='w-5 h-5' />
               </button>
             </div>
@@ -125,6 +126,7 @@ const url = getCldImageUrl({ src: id })
     const $loaderText = document.querySelector('.loader_text')
     const $downloadButton = document.querySelector('.download') as HTMLButtonElement
     const $shareButton = document.querySelector('.sharewp') as HTMLButtonElement
+    const $downloadShare = document.querySelectorAll('.download_share button')
 
     const $options = document.querySelectorAll('.options li')
     if ($options) {
@@ -254,6 +256,10 @@ const url = getCldImageUrl({ src: id })
         $loader?.classList.add('hidden')
         $loaderText?.classList.add('hidden')
         preview.style.opacity = '1'
+        $downloadShare.forEach(el => {
+          const button = el as HTMLButtonElement
+          button.disabled = false
+        })
       }
 
       $downloadButton.addEventListener('click', async () => {
