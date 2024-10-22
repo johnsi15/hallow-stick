@@ -5,21 +5,34 @@ interface Props {
 }
 
 const { title, description } = Astro.props
+const customDescription =
+  description || 'Dale un toque espeluznante a tus fotos convirtiéndolas en stickers de Halloween únicos.'
 ---
 
 <!doctype html>
 <html lang='es' class='bg-[#020202]'>
   <head>
     <meta charset='UTF-8' />
-    <meta name='description' content='Astro description' />
     <meta name='viewport' content='width=device-width' />
     <link rel='icon' type='image/webp' href='/fantasma.webp' />
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
-    <meta
-      name='description'
-      content={description || 'Dale un toque espeluznante a tus fotos convirtiéndolas en stickers de Halloween únicos.'}
-    />
+    <meta name='description' content={customDescription} />
+
+    <!-- Facebook Meta Tags -->
+    <meta property='og:url' content='https://hallowstick.netlify.app/' />
+    <meta property='og:type' content='website' />
+    <meta property='og:title' content='HallowStick 🎃👻' />
+    <meta property='og:description' content={customDescription} />
+    <meta property='og:image' content='/share-hallowstick.png' />
+
+    <!-- Twitter Meta Tags -->
+    <meta name='twitter:card' content='summary_large_image' />
+    <meta property='twitter:domain' content='hallowstick.netlify.app' />
+    <meta property='twitter:url' content='https://hallowstick.netlify.app/' />
+    <meta name='twitter:title' content='HallowStick 🎃👻' />
+    <meta name='twitter:description' content={customDescription} />
+    <meta name='twitter:image' content='/share-hallowstick.png' />
   </head>
   <body>
     <slot />
