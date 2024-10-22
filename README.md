@@ -10,7 +10,7 @@ Estas imágenes se pueden descargar y compartir fácilmente en redes sociales, c
   <div align="center">
     <a href="https://seocheckai.com/">
       <img
-      src=""
+      src="https://github.com/user-attachments/assets/14b733c8-c7d4-4a5a-b683-29cb3a60b9f1"
       alt="HallowStick"/>
     </a>
 
