@@ -1,3 +1,21 @@
+<div align="center">
+  <a href="[https://seocheckai.com](https://astro.build/)">
+    <img
+      src="https://github.com/user-attachments/assets/fdbe9563-1c72-49c0-97c5-2c5b9e626a29"
+      alt="Astro"
+      width="180"
+    />
+  </a>
+  
+  <a href="[https://seocheckai.com](https://astro.build/)">
+    <img
+      src="https://github.com/user-attachments/assets/888928bf-f5ae-448d-ab75-19791cf5d920"
+      alt="Cloudinary"
+      width="180"
+    />
+  </a>
+</div>
+
 # HallowStick 🎃👻
 
 Dale un toque espeluznante a tus fotos convirtiéndolas en stickers de Halloween únicos. 🧙
@@ -8,13 +26,11 @@ Estas imágenes se pueden descargar y compartir fácilmente en redes sociales, c
 
 <div align="center">
   <div align="center">
-    <a href="https://seocheckai.com/">
+    <a href="https://hallowstick.netlify.app/">
       <img
       src="https://github.com/user-attachments/assets/14b733c8-c7d4-4a5a-b683-29cb3a60b9f1"
       alt="HallowStick"/>
     </a>
-
-     
   </div>
 </div>
 
