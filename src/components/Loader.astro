@@ -30,11 +30,17 @@
 
 <style lang='scss'>
   :root {
-    --size: 20vw;
-    --thickness: 8vw;
+    --size: 10rem;
+    --thickness: 4rem;
     --color: #f4f4f4;
     --shadow: #111;
     --bg: #141414;
+  }
+
+  @media (max-width: 768px) {
+    .loader {
+      zoom: 0.6;
+    }
   }
   .loader {
     width: calc(var(--size) - var(--thickness));
@@ -44,7 +50,8 @@
     position: relative;
     transform: rotate(45deg);
     box-sizing: content-box;
-    zoom: 0.5;
+    margin: 0 auto;
+    // zoom: 0.5;
     .circle {
       width: 100%;
       height: 100%;
@@ -112,10 +119,10 @@
           position: absolute;
           z-index: -1;
           top: calc(var(--thickness) / 3);
-          right: -2%;
-          width: calc(var(--thickness) + 4%);
+          right: -5%;
+          width: calc(var(--thickness) + 10%);
           filter: url(#goo);
-          height: calc(var(--thickness) / 3);
+          height: calc(var(--thickness) / 2);
           padding-top: calc(var(--thickness) / 3);
           overflow-x: hidden;
           box-sizing: content-box;
@@ -127,8 +134,8 @@
             top: calc(calc(var(--thickness) / 2) * -0.001);
             right: 0;
             box-shadow:
-              calc(var(--thickness) / -2.5) 0 0 var(--color),
-              calc(var(--thickness) / 2.5) 0 0 var(--color),
+              calc(var(--thickness) / -3.5) 0 0 var(--color),
+              calc(var(--thickness) / 3.5) 0 0 var(--color),
               calc(var(--thickness) / 1.25) 0 0 var(--color),
               calc(var(--thickness) / -1.25) 0 0 var(--color);
             border-radius: 50%;
