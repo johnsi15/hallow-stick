@@ -27,12 +27,12 @@ const url = getCldImageUrl({ src: id })
   description='Convierte tus imágenes en stickers personalizados para Halloween.'
 >
   <main data-id={id} data-topic={topic} data-text={text} data-color={color}>
-    <section class='bg-hero-halloween bg-cover bg-center px-4 w-full h-screen filter brightness-90'>
+    <section class='hero bg-hero-halloween bg-cover bg-center px-4 w-full h-dvh filter brightness-90'>
       <Header />
       <div
         class='relative max-w-xl w-full h-full m-auto flex flex-col justify-center items-center animate-fade-up animate-once'
       >
-        <div class='absolute inset-0 w-full m-auto md:top-24 top-6'>
+        <div class='absolute md:inset-0 w-full m-auto md:top-24 top-6'>
           <h2 class='md:text-5xl text-3xl font-serif text-bunker-950 text-center pb-7'>
             Crea tu Sticker de Halloween Personalizado
           </h2>
@@ -40,13 +40,15 @@ const url = getCldImageUrl({ src: id })
             <img
               id='preview'
               src={url}
-              class='w-[512px] max-w-full object-cover aspect-square shadow-2xl bg-bunker-900'
+              class='w-[512px] max-w-full object-cover aspect-square shadow-2xl shadow-bunker-950 bg-bunker-900'
               width='512'
             />
-            <div class='loader hidden absolute md:left-56 left-32 top-36 m-auto'>
+            <div class='loader hidden absolute top-24 mx-auto w-full'>
               <Loader />
             </div>
-            <p class='loader_text hidden absolute bottom-24 text-blue-zodiac-300 text-center mt-4 text-lg'>
+            <p
+              class='loader_text hidden absolute bottom-24 text-blue-zodiac-300 text-center mt-4 text-sm bg-bunker-900 px-3 py-1 rounded-lg'
+            >
               Personalizando tu sticker...
             </p>
 
@@ -68,7 +70,7 @@ const url = getCldImageUrl({ src: id })
       </div>
     </section>
     <section class='bg-custom-gradient pb-10'>
-      <div class='max-w-3xl m-auto -translate-y-12'>
+      <div class='s_topics max-w-3xl m-auto -translate-y-12'>
         <Topics />
 
         <div class='flex flex-col mt-20'>
@@ -113,189 +115,200 @@ const url = getCldImageUrl({ src: id })
       <Footer />
     </section>
   </main>
+</Layout>
 
-  <script>
-    import { getCldImageUrl } from 'astro-cloudinary/helpers'
-    import { navigate } from 'astro:transitions/client'
+<script>
+  import { getCldImageUrl } from 'astro-cloudinary/helpers'
+  import { navigate } from 'astro:transitions/client'
 
-    const $main = document.querySelector('main') as HTMLElement
-    const id = $main.getAttribute('data-id')
-    const topic = $main.getAttribute('data-topic')
-    const text = $main.getAttribute('data-text')
-    const color = $main.getAttribute('data-color')
-    const preview = document.getElementById('preview') as HTMLImageElement
-    const $formTextCustom = document.getElementById('text-custom') as HTMLFormElement
-    const $loader = document.querySelector('.loader')
-    const $loaderText = document.querySelector('.loader_text')
-    const $downloadButton = document.querySelector('.download') as HTMLButtonElement
-    const $shareButton = document.querySelector('.sharewp') as HTMLButtonElement
-    const $downloadShare = document.querySelectorAll('.download_share button')
+  const $main = document.querySelector('main') as HTMLElement
+  const id = $main.getAttribute('data-id')
+  const topic = $main.getAttribute('data-topic')
+  const text = $main.getAttribute('data-text')
+  const color = $main.getAttribute('data-color')
+  const preview = document.getElementById('preview') as HTMLImageElement
+  const $formTextCustom = document.getElementById('text-custom') as HTMLFormElement
+  const $loader = document.querySelector('.loader')
+  const $loaderText = document.querySelector('.loader_text')
+  const $downloadButton = document.querySelector('.download') as HTMLButtonElement
+  const $shareButton = document.querySelector('.sharewp') as HTMLButtonElement
+  const $downloadShare = document.querySelectorAll('.download_share button')
 
-    const $options = document.querySelectorAll('.options li')
-    if ($options) {
-      $options.forEach(el => {
-        el.addEventListener('click', event => {
-          const target = event.currentTarget as HTMLElement
-          cleanClass($options)
+  const $options = document.querySelectorAll('.options li')
+  if ($options) {
+    $options.forEach(el => {
+      el.addEventListener('click', event => {
+        const target = event.currentTarget as HTMLElement
+        cleanClass($options)
 
-          target.classList.add('selected', '!bg-bunker-600', 'scale-105')
-          const topic = target.getAttribute('data-topic')
-          navigate(`/sticker?id=${id}&topic=${topic}`)
-        })
+        target.classList.add('selected', '!bg-bunker-600', 'scale-105')
+        const topic = target.getAttribute('data-topic')
+        navigate(`/sticker?id=${id}&topic=${topic}`)
       })
-    }
-
-    function cleanClass(options: NodeListOf<Element>) {
-      options.forEach(el => {
-        if (el.classList.contains('selected')) {
-          el.classList.remove('selected', '!bg-bunker-600', 'scale-105')
-        }
-      })
-    }
-
-    const TOPICS: Record<string, Record<string, string>> = {
-      ghost: {
-        prompt: 'Add playful cartoon ghosts in the background with a spooky yet whimsical vibe',
-        logo: 'halloween-images/logos/c6ikyq6tmrqchja343vr',
-      },
-      zombies: {
-        prompt: 'Add a horrifying zombies in the background with rotting flesh empty eyes and a twisted grin',
-        logo: 'halloween-images/logos/qfek5ygtibniszbcajyl',
-      },
-      pumpkin: {
-        prompt: 'Add scary and terrifying pumpkins in the background for Halloween',
-        logo: 'halloween-images/logos/ucxxyjztwwrsu3zawu2y',
-      },
-      witch: {
-        prompt: 'Add witches in the background with a Halloween theme',
-        logo: 'halloween-images/logos/hsxv4zbjdemaub6t1y4p',
-      },
-    } as const
-
-    $formTextCustom.addEventListener('submit', e => {
-      e.preventDefault()
-      const formData = new FormData($formTextCustom)
-      const text = formData.get('texto') ?? ''
-      const color = formData.get('color') ?? '#000000'
-
-      navigate(
-        `/sticker?id=${id}&topic=${topic}&text=${encodeURIComponent(text.toString())}&color=${encodeURIComponent(color.toString())}`
-      )
     })
+  }
 
-    interface GenerateImage {
-      topic: string
-      id: string
-      text?: string | null
-      color?: string | null
-    }
+  function cleanClass(options: NodeListOf<Element>) {
+    options.forEach(el => {
+      if (el.classList.contains('selected')) {
+        el.classList.remove('selected', '!bg-bunker-600', 'scale-105')
+      }
+    })
+  }
 
-    function generateImage({ topic, id, text, color }: GenerateImage) {
-      const url = getCldImageUrl({
-        src: id,
-        replaceBackground: TOPICS[topic].prompt,
-        crop: {
-          type: 'thumb',
-          width: 512,
-          height: 512,
-          source: true,
-          zoom: '1.0',
-          gravity: 'center',
-        },
-        overlays: [
-          {
-            publicId: TOPICS[topic].logo,
-            position: {
-              gravity: 'north_west',
-              angle: -20,
-            },
-            width: 100,
-            height: 100,
-          },
-          text && color
-            ? {
-                position: {
-                  x: 0,
-                  y: 30,
-                  gravity: 'south',
-                },
-                text: {
-                  color: color,
-                  fontFamily: 'Source Sans Pro',
-                  fontSize: 60,
-                  fontWeight: 'black',
-                  text: text,
-                },
-              }
-            : {},
-        ],
-        replace: {
-          to: 'Apply vibrant colors and intricate patterns resembling a Halloween mask or festival makeup but maintain the original facial structure and identity',
-          from: 'face',
-        },
-        border: '7px_solid_white',
-        format: 'jpg',
+  const TOPICS: Record<string, Record<string, string>> = {
+    ghost: {
+      prompt: 'Add playful cartoon ghosts in the background with a spooky yet whimsical vibe',
+      logo: 'halloween-images/logos/c6ikyq6tmrqchja343vr',
+    },
+    zombies: {
+      prompt: 'Add a horrifying zombies in the background with rotting flesh empty eyes and a twisted grin',
+      logo: 'halloween-images/logos/qfek5ygtibniszbcajyl',
+    },
+    pumpkin: {
+      prompt: 'Add scary and terrifying pumpkins in the background for Halloween',
+      logo: 'halloween-images/logos/ucxxyjztwwrsu3zawu2y',
+    },
+    witch: {
+      prompt: 'Add witches in the background with a Halloween theme',
+      logo: 'halloween-images/logos/hsxv4zbjdemaub6t1y4p',
+    },
+  } as const
+
+  $formTextCustom.addEventListener('submit', e => {
+    e.preventDefault()
+    const formData = new FormData($formTextCustom)
+    const text = formData.get('texto') ?? ''
+    const color = formData.get('color') ?? '#000000'
+
+    navigate(
+      `/sticker?id=${id}&topic=${topic}&text=${encodeURIComponent(text.toString())}&color=${encodeURIComponent(color.toString())}`
+    )
+  })
+
+  interface GenerateImage {
+    topic: string
+    id: string
+    text?: string | null
+    color?: string | null
+  }
+
+  function generateImage({ topic, id, text, color }: GenerateImage) {
+    const url = getCldImageUrl({
+      src: id,
+      replaceBackground: TOPICS[topic].prompt,
+      crop: {
+        type: 'thumb',
         width: 512,
         height: 512,
-      })
+        source: true,
+        zoom: '1.0',
+        gravity: 'center',
+      },
+      overlays: [
+        {
+          publicId: TOPICS[topic].logo,
+          position: {
+            gravity: 'north_west',
+            angle: -20,
+          },
+          width: 100,
+          height: 100,
+        },
+        text && color
+          ? {
+              position: {
+                x: 0,
+                y: 30,
+                gravity: 'south',
+              },
+              text: {
+                color: color,
+                fontFamily: 'Source Sans Pro',
+                fontSize: 60,
+                fontWeight: 'black',
+                text: text,
+              },
+            }
+          : {},
+      ],
+      replace: {
+        to: 'Apply vibrant colors and intricate patterns resembling a Halloween mask or festival makeup but maintain the original facial structure and identity',
+        from: 'face',
+      },
+      border: '7px_solid_white',
+      format: 'jpg',
+      width: 512,
+      height: 512,
+    })
 
-      return url
+    return url
+  }
+
+  if (topic && id) {
+    const url = generateImage({ topic, id, text, color })
+
+    preview.style.opacity = '.3'
+    $loader?.classList.remove('hidden')
+    $loaderText?.classList.remove('hidden')
+
+    preview.src = url
+    preview.onload = () => {
+      $loader?.classList.add('hidden')
+      $loaderText?.classList.add('hidden')
+      preview.style.opacity = '1'
+      $downloadShare.forEach(el => {
+        const button = el as HTMLButtonElement
+        button.disabled = false
+      })
     }
 
-    if (topic && id) {
-      const url = generateImage({ topic, id, text, color })
+    $downloadButton.addEventListener('click', async () => {
+      const response = await fetch(url)
+      const blob = await response.blob()
 
-      preview.style.opacity = '.3'
-      $loader?.classList.remove('hidden')
-      $loaderText?.classList.remove('hidden')
+      const blobUrl = URL.createObjectURL(blob)
 
-      preview.src = url
-      preview.onload = () => {
-        $loader?.classList.add('hidden')
-        $loaderText?.classList.add('hidden')
-        preview.style.opacity = '1'
-        $downloadShare.forEach(el => {
-          const button = el as HTMLButtonElement
-          button.disabled = false
-        })
-      }
+      const a = document.createElement('a')
 
-      $downloadButton.addEventListener('click', async () => {
-        const response = await fetch(url)
-        const blob = await response.blob()
+      a.href = blobUrl
+      a.download = 'sticker-hallowstick.jpg'
 
-        const blobUrl = URL.createObjectURL(blob)
+      document.body.appendChild(a)
+      a.click()
 
-        const a = document.createElement('a')
+      document.body.removeChild(a)
+      URL.revokeObjectURL(blobUrl)
+    })
 
-        a.href = blobUrl
-        a.download = 'sticker-hallowstick.jpg'
+    $shareButton.addEventListener('click', async () => {
+      const a = document.createElement('a')
 
-        document.body.appendChild(a)
-        a.click()
+      const encodedText = text ? encodeURIComponent(text.toString()) : ''
+      const encodedColor = color ? encodeURIComponent(color.toString()) : ''
 
-        document.body.removeChild(a)
-        URL.revokeObjectURL(blobUrl)
-      })
+      const textColor = text && color ? `%26text=${encodedText}%26color=${encodedColor}` : ''
 
-      $shareButton.addEventListener('click', async () => {
-        const a = document.createElement('a')
+      const url = `https://hallowstick.netlify.app/sticker?id=${id}%26topic=${topic}${textColor}`
 
-        const encodedText = text ? encodeURIComponent(text.toString()) : ''
-        const encodedColor = color ? encodeURIComponent(color.toString()) : ''
+      const message = `¡Mira este sticker de Halloween! ${url}`
 
-        const textColor = text && color ? `%26text=${encodedText}%26color=${encodedColor}` : ''
+      a.href = encodeURI(`https://wa.me/?text=${message}`)
+      a.download = 'sticker-hallowstick.jpg'
+      a.target = '_blank'
 
-        const url = `https://hallowstick.netlify.app/sticker?id=${id}%26topic=${topic}${textColor}`
+      a.click()
+    })
+  }
+</script>
 
-        const message = `¡Mira este sticker de Halloween! ${url}`
-
-        a.href = encodeURI(`https://wa.me/?text=${message}`)
-        a.download = 'sticker-hallowstick.jpg'
-        a.target = '_blank'
-
-        a.click()
-      })
+<style>
+  @media screen and (max-width: 360px) {
+    .hero {
+      margin-bottom: 60px;
     }
-  </script>
-</Layout>
+    .s_topics {
+      transform: translate(0);
+    }
+  }
+</style>

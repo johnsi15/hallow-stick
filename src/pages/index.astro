@@ -39,11 +39,10 @@ const stickers = await getCollection('stickers')
             multiple: false,
             maxFiles: 1,
             language: 'es',
-            // clientAllowedFormats: ['image'],
+            clientAllowedFormats: ['image'],
             text: {
               es: {
                 or: 'O',
-
                 menu: {
                   files: 'Subir desde tu dispositivo',
                 },
@@ -63,6 +62,7 @@ const stickers = await getCollection('stickers')
       </div>
 
       <Examples />
+
       <div class='max-w-4xl md:mx-auto mx-2 md:mt-36 mt-12 mb-16'>
         <h3 class='text-3xl text-center text-blue-zodiac-200 max-w-2xl w-full mx-auto mb-12'>
           Haz clic y descubre lo fácil que es transformar una foto en un sticker personalizado
@@ -80,8 +80,8 @@ const stickers = await getCollection('stickers')
                       crop={{
                         type: 'thumb',
                         source: true,
-                        width: 300,
-                        height: 300,
+                        width: 400,
+                        height: 400,
                         gravity: 'center',
                       }}
                       alt={`stciker ${sticker.data.public_id}`}
