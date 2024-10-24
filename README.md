@@ -60,6 +60,18 @@ Estas imágenes se pueden descargar y compartir fácilmente en redes sociales, c
 * `npm build` to build production app
 * `npm start` to run mode production
 
+## Variables de entorno
+
+Para ejecutar el proyecto correctamente, es necesario crear un archivo `.env` en la raíz del proyecto con las siguientes variables:
+
+```shell
+PUBLIC_CLOUDINARY_CLOUD_NAME="<Your Cloud Name>" # Nombre del servicio en Cloudinary
+PUBLIC_CLOUDINARY_API_KEY="<Your API Key>" # Clave pública para acceder a la API
+CLOUDINARY_API_SECRET="<Your API Secret>" # Clave secreta utilizada para operaciones seguras con Cloudinary
+```
+
+Asegúrate de revisar el archivo `.env.example` como referencia para configurar estas variables correctamente.
+
 ## Contacto
 
 Puedes contactarme si tienes dudas sobre el proyecto o cualquier otra cosa en la que pueda ayudarte.
