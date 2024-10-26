@@ -43,6 +43,7 @@ export default {
       backgroundImage: {
         'hero-halloween': 'url(/hero-halloween.webp)',
         'custom-gradient': 'linear-gradient(180deg, hsl(0deg 0% 0.78%) 0%, hsla(217, 80%, 18%, 1) 100%)',
+        noise: 'url(/noise.svg)',
       },
       filter: {
         'custom-filter':
