@@ -1,0 +1,48 @@
+<div class='bg-video absolute h-dvh w-full inset-0 z-0 opacity-30 mix-blend-multiply'>
+  <video src='/bg-video.mp4' loop muted autoplay class='w-full h-full object-cover'></video>
+</div>
+<div class='noise bg-noise absolute h-dvh w-full inset-0 z-10 mix-blend-screen opacity-10'></div>
+<!-- <div class='absolute z-10 inset-0 bg-black/10 shadow-[0_-20px_50px_-10px_rgba(0,0,0,0.7)]'></div> -->
+<audio id='background-audio' src='/audio/haunted-ghost.mp3' loop autoplay></audio>
+
+<style>
+  .noise {
+    animation: noiseAnimation 0.2s step-end infinite;
+  }
+
+  @keyframes noiseAnimation {
+    0% {
+      background-position: 0 0;
+    }
+    10% {
+      background-position: -730px 590px;
+    }
+    20% {
+      background-position: -200px -200px;
+    }
+    30% {
+      background-position: 150px 356px;
+    }
+    40% {
+      background-position: 310px -440px;
+    }
+    50% {
+      background-position: -630px 520px;
+    }
+    60% {
+      background-position: 10px 930px;
+    }
+    70% {
+      background-position: -240px -280px;
+    }
+    80% {
+      background-position: 178px 256px;
+    }
+    90% {
+      background-position: -710px -40px;
+    }
+    100% {
+      background-position: 50px -50px;
+    }
+  }
+</style>
