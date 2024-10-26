@@ -5,6 +5,7 @@ import Topics from '@components/Topics.astro'
 import Header from '@components/Header.astro'
 import Footer from '@components/Footer.astro'
 import Examples from '@components/Examples.astro'
+import BgNoiseVideo from '@components/BgNoiseVideo.astro'
 
 import { getCollection } from 'astro:content'
 const stickers = await getCollection('stickers')
@@ -24,10 +25,8 @@ const stickers = await getCollection('stickers')
           </p>
         </div>
       </div>
-      <div class='bg-video absolute h-dvh w-full inset-0 z-0 opacity-30 mix-blend-screen'>
-        <video src='/bg-video.mp4' loop muted autoplay class='w-full h-full object-cover'></video>
-      </div>
-      <!-- <div class='noise bg-noise absolute h-dvh w-full inset-0 z-10 mix-blend-screen opacity-10'></div> -->
+
+      <BgNoiseVideo />
     </section>
 
     <section id='create-sticker' class='bg-custom-gradient pb-10'>

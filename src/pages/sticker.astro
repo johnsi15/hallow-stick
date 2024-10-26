@@ -7,6 +7,7 @@ import Header from '@components/Header.astro'
 import Footer from '@components/Footer.astro'
 import Wp from 'src/icons/wp.astro'
 import Examples from '@components/Examples.astro'
+import BgNoiseVideo from '@components/BgNoiseVideo.astro'
 
 const { searchParams } = Astro.url
 const queryString = decodeURIComponent(searchParams.toString())
@@ -30,7 +31,7 @@ const url = getCldImageUrl({ src: id })
     <section class='hero bg-hero-halloween bg-cover bg-center px-4 w-full h-dvh filter brightness-90'>
       <Header />
       <div
-        class='relative max-w-xl w-full h-full m-auto flex flex-col justify-center items-center animate-fade-up animate-once'
+        class='relative max-w-xl w-full h-full m-auto flex flex-col justify-center items-center animate-fade-up animate-once z-20'
       >
         <div class='absolute md:inset-0 w-full m-auto md:top-24 top-6'>
           <h2 class='md:text-5xl text-3xl font-serif text-bunker-950 text-center pb-7'>
@@ -68,6 +69,8 @@ const url = getCldImageUrl({ src: id })
           </div>
         </div>
       </div>
+
+      <BgNoiseVideo />
     </section>
     <section class='bg-custom-gradient pb-10'>
       <div class='s_topics max-w-3xl m-auto -translate-y-12'>
@@ -303,7 +306,7 @@ const url = getCldImageUrl({ src: id })
 </script>
 
 <style>
-  @media screen and (max-width: 360px) {
+  @media screen and (max-width: 376px) {
     .hero {
       margin-bottom: 60px;
     }
